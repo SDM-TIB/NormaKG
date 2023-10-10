@@ -1,0 +1,25 @@
+@prefix fd: <http://example-fd-set.com/> .	
+
+<#GENOMIC> fd:key [fd:column_name "{Gene CDS length, ID_tumour}";
+	fd:determine [fd:column_name "Gene name";
+					fd:dependant "{Accession Number,MUTATION_ID}";
+				];
+	fd:determine [fd:column_name "Gene CDS length";
+					fd:dependant "{Accession Number}";
+				];
+	fd:determine [fd:column_name "pFormat";
+					fd:dependant "{MUTATION_ID}"
+				];
+	fd:determine [fd:column_name "HGNC ID";
+					fd:dependant "{Accession Number,MUTATION_ID}"
+				];
+	fd:determine [fd:column_name "ID_tumour";
+					fd:dependant "{ID_sample}"
+				];
+	fd:determine [fd:column_name "Primary site";
+					fd:dependant "{ID_sample,ID_tumou}"
+				];
+	fd:determine [fd:column_name "Accession Number";
+					fd:dependant "{MUTATION_ID}"
+				]
+	].
