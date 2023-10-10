@@ -82,5 +82,5 @@ The functional dependencies of a data source are determined by using [FDTool](ht
 
 ## Running KGSaw
 ```
-python3 -m run_fragmentor.py /path/to/config/file
+python3 run_fragmentor.py /path/to/config/file
 ```
