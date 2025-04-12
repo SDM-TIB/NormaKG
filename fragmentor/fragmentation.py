@@ -258,9 +258,9 @@ def fd_extraction(fd_file):
 	try:
 		mapping_graph.parse(fd_file, format='n3')
 	except Exception as n3_mapping_parse_exception:
-		log_error('fd_parser',n3_mapping_parse_exception)
-		log_error('fd_parser','Could not parse {} as a mapping file'.format(fd_file))
-		log_error('fd_parser',"Aborting...")
+		print('fd_parser',n3_mapping_parse_exception)
+		print('fd_parser','Could not parse {} as a mapping file'.format(fd_file))
+		print('fd_parser',"Aborting...")
 		sys.exit(1)
 
 	fd_query="""
@@ -296,13 +296,21 @@ def data_fragmentation(config_path):
 	if not os.path.exists(config["datasets"]["output_folder"]):
 		os.mkdir(config["datasets"]["output_folder"])
 
+	if "engine" in config["datasets"]:
+		engine = config["datasets"]["engine"]
+	else:
+		engine = None
+
 	for dataset_number in range(int(config["datasets"]["number_of_datasets"])):
 		dataset_i = "dataset" + str(int(dataset_number) + 1)
 		triples_map_list = mapping_parser(config[dataset_i]["mapping"])
-		print("Fragmenting {}...".format(config[dataset_i]["name"]))
+		print("Normalizing {}...".format(config[dataset_i]["name"]))
 		if "fd" not in config[dataset_i]:
 			simple_projection(config[dataset_i]["mapping"], config["datasets"]["output_folder"], triples_map_list)
 		else:
 			fd = fd_extraction(config[dataset_i]["fd"])
-			functional_projection(config[dataset_i]["mapping"], config["datasets"]["output_folder"], triples_map_list, fd)
-		print("Sucessfully fragmented {}...\n".format(config[dataset_i]["name"]))
+			functional_projection(config[dataset_i]["mapping"], config["datasets"]["output_folder"], config[dataset_i]["name"], triples_map_list, fd, engine)
+		if engine == "":
+			print("Sucessfully normalized {}...\n".format(config[dataset_i]["name"]))
+		else:
+			print("Sucessfully normalized and executed {}...\n".format(config[dataset_i]["name"]))

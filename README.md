@@ -1,15 +1,15 @@
-# KGSaw
+# NormaKG
 
-KGSaw is a versatile tool that employs mapping partitioning and data fragmentation techniques, guided by functional dependencies, to enhance the performance of existing knowledge graph creation engines. As of now, KGSaw exclusively supports the projection of CSV files.
+NormaKG is a versatile tool that employs mapping partitioning and data normalization techniques, guided by functional dependencies, to enhance the performance of existing knowledge graph creation engines. As of now, NormaKG exclusively supports the projection of CSV files.
 
-## Installing KGSaw
+## Installing NormaKG
 ```
 pip3 install -r requirements.txt
 ```
 
 ## Example of Configuration File
 
-KGSaw offers two types of projections: Simple and Functional. The Simple projection focuses on projecting only the necessary data sources and transforming Parent triples maps and self-joins into their equivalent `rr:template` operations. On the other hand, the Functional projection is based on the functional dependencies of the data sources, ensuring that non-functional attributes are processed separately. This approach enables knowledge graph creation engines to run without the need to remove duplicates. Additionally, the Functional projection requires a file containing the functional dependencies of the data sources.
+NormaKG offers two types of projections: Simple and Functional. The Simple projection (MapSDI) focuses on projecting only the necessary data sources and transforming Parent triples maps and self-joins into their equivalent `rr:template` operations. On the other hand, the Functional projection (NormaKG) is based on the functional dependencies of the data sources, ensuring that non-functional attributes are processed separately. This approach enables knowledge graph creation engines to run without the need to remove duplicates. Additionally, the Functional projection requires a file containing the functional dependencies of the data sources. Users when using the functional projection can generate the knowledge if provided with a knowledge graph creation engine. Currently, NormaKG can execute SDM-RDFizer, RMLMapper, Morph-KGC, RocketRML, and FlexRML. Please note, that corresponding libraries and executables for the engines must be downloaded separately. The `engine` parameter is the configuration file is optional. If not given, NormaKG will normalized the provided mappings and data sources. 
 
 ### Example of Simple Projection Configuration File
 
@@ -35,6 +35,7 @@ main_directory: .
 [datasets]
 number_of_datasets: 1
 output_folder: ${default:main_directory}/fd_proy
+engine: SDM-RDFizer
 
 [dataset1]
 name: test-case
